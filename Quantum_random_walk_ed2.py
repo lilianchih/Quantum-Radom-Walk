@@ -12,7 +12,7 @@ for i in range(2*total_steps + 1):
 psi[total_steps] = np.copy(initial_state)
 
 def U(state, step):
-    """spin-selective walking operator
+    """spin-dependent unitary walking operator
     :type state: a list of np arrays
     """
     t = len(state)
@@ -35,10 +35,15 @@ for i in range(2*total_steps+1):
     prob.append((psi[i][0])**2 + (psi[i][1])**2)
 
 deviation = 0
+mean = 0
+rms = 0 #root-mean-square distance
 for i in range(2*total_steps+1):
-    deviation += x[i]**2 * prob[i]
-deviation = sqrt(deviation)
-print deviation
+    rms += x[i]**2 * prob[i]
+    mean += x[i] * prob[i]
+rms = sqrt(rms)
+
+print rms
+print mean
 
 plt.plot(x, prob)
 plt.show()
